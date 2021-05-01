@@ -1,0 +1,112 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "BaseIconBuilder",
+"language": "GDScript",
+"path": "res://util/base/base_icon_builder.gd"
+}, {
+"base": "Reference",
+"class": "BaseIconEntry",
+"language": "GDScript",
+"path": "res://util/base/base_icon_entry.gd"
+}, {
+"base": "Reference",
+"class": "GDIconPacker",
+"language": "GDScript",
+"path": "res://util/gd_icon_packer.gd"
+}, {
+"base": "BaseIconBuilder",
+"class": "ICNSBuilder",
+"language": "GDScript",
+"path": "res://util/icns/icns_builder.gd"
+}, {
+"base": "BaseIconEntry",
+"class": "ICNSEntry",
+"language": "GDScript",
+"path": "res://util/icns/icns_entry.gd"
+}, {
+"base": "BaseIconBuilder",
+"class": "ICOBuilder",
+"language": "GDScript",
+"path": "res://util/ico/ico_builder.gd"
+}, {
+"base": "BaseIconEntry",
+"class": "ICOEntry",
+"language": "GDScript",
+"path": "res://util/ico/ico_entry.gd"
+}, {
+"base": "Reference",
+"class": "PNGDecoder",
+"language": "GDScript",
+"path": "res://util/png/png_decoder.gd"
+}, {
+"base": "Reference",
+"class": "SerialBuffer",
+"language": "GDScript",
+"path": "res://util/struct/serial_buffer.gd"
+} ]
+_global_script_class_icons={
+"BaseIconBuilder": "",
+"BaseIconEntry": "",
+"GDIconPacker": "",
+"ICNSBuilder": "",
+"ICNSEntry": "",
+"ICOBuilder": "",
+"ICOEntry": "",
+"PNGDecoder": "",
+"SerialBuffer": ""
+}
+
+[application]
+
+config/name="GD Icon Packer"
+config/description="A PNG icon packer written in GDScript."
+run/main_scene="res://main/main.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="krobbizoid/gd_icon_packer"
+config/icon="res://icon.png"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": false,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
+
+[logging]
+
+file_logging/enable_file_logging.pc=false
+
+[node]
+
+name_num_separator=2
+name_casing=2
+
+[physics]
+
+common/enable_pause_aware_picking=true
