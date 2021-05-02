@@ -12,4 +12,5 @@ Thumbs.db
 
 # Ignore
 src/.import/
+src/test/
 src/icon.png.import

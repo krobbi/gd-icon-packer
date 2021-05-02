@@ -2,9 +2,10 @@ class_name PNGDecoder
 extends Reference
 
 enum {
-	CHUNK_IHDR = 0x49484452,
-	CHUNK_PLTE = 0x504c5445,
-	CHUNK_IEND = 0x49454e44,
+	CHUNK_IHDR = (ord("I") << 24) | (ord("H") << 16) | (ord("D") << 8) | ord("R"),
+	CHUNK_PLTE = (ord("P") << 24) | (ord("L") << 16) | (ord("T") << 8) | ord("E"),
+	CHUNK_IDAT = (ord("I") << 24) | (ord("D") << 16) | (ord("A") << 8) | ord("T"),
+	CHUNK_IEND = (ord("I") << 24) | (ord("E") << 16) | (ord("N") << 8) | ord("D"),
 };
 
 enum {
@@ -21,6 +22,7 @@ const SIGNATURE: PoolByteArray = PoolByteArray([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x
 
 var seen_ihdr: bool = false;
 var seen_plte: bool = false;
+var seen_idat: bool = false;
 var finished: bool = false;
 var ok: bool = false;
 var length: int = 0;
@@ -79,6 +81,8 @@ func start(data: PoolByteArray) -> void:
 	ok = false;
 	seen_ihdr = false;
 	seen_plte = false;
+	seen_idat = false;
+	palette_size = 0;
 	
 	length = data.size();
 	buffer.load_data_length(data, length);
@@ -196,6 +200,20 @@ func read_plte(chunk_length: int) -> void:
 	palette_size = chunk_length / 3;
 
 
+func read_idat() -> void:
+	seen_idat = true;
+	
+	if not seen_ihdr:
+		print("PNG file contained an IDAT chunk before the IHDR chunk!");
+		finished = true;
+		return;
+	
+	if palette_requirement == PALETTE_REQUIRED and not seen_plte:
+		print("PNG file contained an IDAT chunk before a required PLTE chunk!");
+		finished = true;
+		return;
+
+
 func read_iend() -> void:
 	if not seen_ihdr:
 		print("PNG file did not contain an IHDR chunk!");
@@ -204,6 +222,11 @@ func read_iend() -> void:
 	
 	if palette_requirement == PALETTE_REQUIRED and not seen_plte:
 		print("PNG file did not contain a required PLTE chunk for indexed color!");
+		finished = true;
+		return;
+	
+	if not seen_idat:
+		print("PNG file did not contain any IDAT chunks!");
 		finished = true;
 		return;
 	
@@ -231,6 +254,8 @@ func read_chunk() -> void:
 			read_ihdr(chunk_length);
 		CHUNK_PLTE:
 			read_plte(chunk_length);
+		CHUNK_IDAT:
+			read_idat();
 		CHUNK_IEND:
 			read_iend();
 	

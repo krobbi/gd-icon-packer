@@ -18,6 +18,7 @@ func pack_file(path: String) -> void:
 func build_icons(path: String) -> void:
 	write_builder(icns, "%s.icns" % path);
 	write_builder(ico, "%s.ico" % path);
+	print("Done!");
 
 
 func write_builder(builder: BaseIconBuilder, path: String) -> void:

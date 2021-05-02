@@ -1,5 +1,5 @@
 # GD Icon Packer
-__Version 1.0.0__  
+__Version 1.0.1__  
 __Copyright &copy; 2021 Chris Roberts__ (Krobbizoid)
 
 A PNG icon packer written in GDScript. Takes source PNG files, extracts some
