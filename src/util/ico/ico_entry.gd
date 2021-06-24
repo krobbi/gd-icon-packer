@@ -15,7 +15,14 @@ func _init(
 	palette_size = palette_size_val;
 	bpp = bpp_val;
 	
-	if width < 0 or height < 0 or width > 256 or height > 256:
+	if width < 1 or height < 1 or width > 256 or height > 256:
+		valid = false;
 		return;
+	
+	if width == 256:
+		width = 0;
+	
+	if height == 256:
+		height = 0;
 	
 	valid = true;

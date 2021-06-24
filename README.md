@@ -1,18 +1,20 @@
 # GD Icon Packer
-__Version 1.0.1__  
+__A PNG icon packer written in GDScript.__  
+__Version 1.0.2__  
+__MIT License__ - https://krobbi.github.io/license/2021/mit.txt
 __Copyright &copy; 2021 Chris Roberts__ (Krobbizoid)
 
 A PNG icon packer written in GDScript. Takes source PNG files, extracts some
-meta-data, performs some rudimentary validation on them, and puts them into .ICO
-or .ICNS files if they meet the standards for these icon types.
+meta-data, performs some rudimentary validation on them, and puts them into
+.ICO or .ICNS files if they meet the standards for these icon types.
 
 Mostly written for personal use to create .ICO and .ICNS files for Godot
 projects.
 
-Not recommended for practical use. There is currently no way to use this without
-opening the `src/` as a [Godot](https://github.com/godotengine/godot) project
-and hard-coding the source and target files in `src/main/main.gd`, before
-running the project.
+Not recommended for practical use. There is currently no way to use this
+without opening the `src/` as a [Godot](https://github.com/godotengine/godot)
+project and hard-coding the source and target files in `src/main/main.gd`,
+before running the project.
 
 _This project is not affiliated with the Godot game engine or any of its
 authors, copyright holders, or contributors._
