@@ -5,12 +5,21 @@ var png: PNGDecoder = PNGDecoder.new();
 var icns: ICNSBuilder = ICNSBuilder.new();
 var ico: ICOBuilder = ICOBuilder.new();
 
-func pack_file(path: String) -> void:
+enum Platform {
+	MACOS = 0b01,
+	WINDOWS = 0b10,
+	ALL = 0b11,
+};
+
+func pack_file(path: String, platforms: int = Platform.ALL) -> void:
 	png.decode_file(path);
 	
 	if png.ok:
-		icns.push_entry(png.create_icns_entry());
-		ico.push_entry(png.create_ico_entry());
+		if platforms & Platform.MACOS != 0:
+			icns.push_entry(png.create_icns_entry());
+		
+		if platforms & Platform.WINDOWS != 0:
+			ico.push_entry(png.create_ico_entry());
 	else:
 		print("Failed to validate %s!" % path);
 
