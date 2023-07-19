@@ -1,5 +1,5 @@
 class_name SerialBuffer
-extends Reference
+extends RefCounted
 
 var _used_bytes: int = 0;
 var _buffer: StreamPeerBuffer = StreamPeerBuffer.new();
@@ -17,11 +17,11 @@ func get_position() -> int:
 	return _buffer.get_position();
 
 
-func get_data_array() -> PoolByteArray:
+func get_data_array() -> PackedByteArray:
 	if _used_bytes > 0:
-		return _buffer.data_array.subarray(0, _used_bytes - 1);
+		return _buffer.data_array.slice(0, _used_bytes);
 	else:
-		return PoolByteArray();
+		return PackedByteArray();
 
 
 func get_u8() -> int:
@@ -40,9 +40,7 @@ func get_ascii(length: int) -> String:
 	return get_data(length).get_string_from_ascii();
 
 
-func get_data(length: int) -> PoolByteArray:
-	# This function returns two values, an @GlobalScope.Error code and a data
-	# array. - @StreamPeer documentation.
+func get_data(length: int) -> PackedByteArray:
 	return _buffer.get_data(length)[1];
 
 
@@ -66,26 +64,25 @@ func put_u32(value: int) -> void:
 
 
 func put_ascii(value: String) -> void:
-	put_data(value.to_ascii());
+	put_data(value.to_ascii_buffer());
 
 
-func put_data(data: PoolByteArray) -> void:
+func put_data(data: PackedByteArray) -> void:
 	var length: int = data.size();
 	put_data_length(data, length);
 
 
-func put_data_length(data: PoolByteArray, length: int) -> void:
-	# warning-ignore: RETURN_VALUE_DISCARDED
+func put_data_length(data: PackedByteArray, length: int) -> void:
 	_buffer.put_data(data);
 	_used_bytes += length;
 
 
-func load_data(data: PoolByteArray) -> void:
+func load_data(data: PackedByteArray) -> void:
 	var length: int = data.size();
 	load_data_length(data, length);
 
 
-func load_data_length(data: PoolByteArray, length: int) -> void:
+func load_data_length(data: PackedByteArray, length: int) -> void:
 	seek_front();
 	_used_bytes = 0;
 	put_data_length(data, length);

@@ -3,10 +3,10 @@ extends BaseIconBuilder
 
 func push_entry(entry: BaseIconEntry) -> void:
 	if entry is ICNSEntry:
-		.push_entry(entry);
+		super.push_entry(entry)
 
 
-func build() -> PoolByteArray:
+func build() -> PackedByteArray:
 	# ICNS files are big-endian:
 	var header_block: SerialBuffer = SerialBuffer.new(true);
 	var body_block: SerialBuffer = SerialBuffer.new(true);

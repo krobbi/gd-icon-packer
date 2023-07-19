@@ -1,11 +1,11 @@
 class_name PNGDecoder
-extends Reference
+extends RefCounted
 
 enum {
-	CHUNK_IHDR = (ord("I") << 24) | (ord("H") << 16) | (ord("D") << 8) | ord("R"),
-	CHUNK_PLTE = (ord("P") << 24) | (ord("L") << 16) | (ord("T") << 8) | ord("E"),
-	CHUNK_IDAT = (ord("I") << 24) | (ord("D") << 16) | (ord("A") << 8) | ord("T"),
-	CHUNK_IEND = (ord("I") << 24) | (ord("E") << 16) | (ord("N") << 8) | ord("D"),
+	CHUNK_IHDR = 1229472850,
+	CHUNK_PLTE = 1347179589,
+	CHUNK_IDAT = 1229209940,
+	CHUNK_IEND = 1229278788,
 };
 
 enum {
@@ -18,7 +18,7 @@ enum {
 
 enum {PALETTE_DISALLOWED, PALETTE_ALLOWED, PALETTE_REQUIRED};
 
-const SIGNATURE: PoolByteArray = PoolByteArray([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+var SIGNATURE: PackedByteArray = PackedByteArray([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
 var seen_ihdr: bool = false;
 var seen_plte: bool = false;
@@ -57,17 +57,15 @@ func create_ico_entry() -> ICOEntry:
 
 
 func decode_file(path: String) -> void:
-	var file: File = File.new();
-	var error: int = file.open(path, File.READ);
+	var file: FileAccess = FileAccess.open(path, FileAccess.READ)
 	
-	if error != OK:
-		file.close();
-		print("Failed to open source file! Error: %d" % error);
+	if !file:
+		print("Failed to open source file!");
 		ok = false;
 		finished = true;
 		return;
 	
-	var data: PoolByteArray = file.get_buffer(file.get_len());
+	var data: PackedByteArray = file.get_buffer(file.get_length());
 	file.close();
 	
 	start(data);
@@ -76,7 +74,7 @@ func decode_file(path: String) -> void:
 		read_chunk();
 
 
-func start(data: PoolByteArray) -> void:
+func start(data: PackedByteArray) -> void:
 	finished = false;
 	ok = false;
 	seen_ihdr = false;
@@ -196,7 +194,7 @@ func read_plte(chunk_length: int) -> void:
 		finished = true;
 		return;
 	
-	# warning-ignore: INTEGER_DIVISION
+	@warning_ignore("integer_division")
 	palette_size = chunk_length / 3;
 
 

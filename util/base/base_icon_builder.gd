@@ -1,5 +1,5 @@
 class_name BaseIconBuilder
-extends Reference
+extends RefCounted
 
 var entries: Array = Array();
 
@@ -10,5 +10,5 @@ func push_entry(entry: BaseIconEntry) -> void:
 	entries.push_back(entry);
 
 
-func build() -> PoolByteArray:
-	return PoolByteArray();
+func build() -> PackedByteArray:
+	return PackedByteArray();

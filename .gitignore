@@ -1,16 +1,18 @@
-# System
-desktop.ini
-Thumbs.db
-.DS_Store
+# Godot Engine:
+.godot/*
 
-# IDE
-.idea
-.vscode
-*.suo
+# Test:
+test/*
+
+# IDE:
+.idea/*
+.vscode/*
+*.code-workspace
 *.sublime-project
 *.sublime-workspace
+*.suo
 
-# Ignore
-src/.import/
-src/test/
-src/icon.png.import
+# OS:
+.DS_Store
+desktop.ini
+Thumbs.db

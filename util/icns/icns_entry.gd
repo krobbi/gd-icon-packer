@@ -3,7 +3,9 @@ extends BaseIconEntry
 
 var type: String;
 
-func _init(length_val: int, data_val: PoolByteArray, width: int, height: int).(length_val, data_val) -> void:
+func _init(length_val: int, data_val: PackedByteArray, width: int, height: int) -> void:
+	super(length_val, data_val)
+	
 	if width != height or width < 1:
 		valid = false;
 		return;

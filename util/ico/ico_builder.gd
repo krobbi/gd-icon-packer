@@ -3,10 +3,10 @@ extends BaseIconBuilder
 
 func push_entry(entry: BaseIconEntry) -> void:
 	if entry is ICOEntry:
-		.push_entry(entry);
+		super.push_entry(entry);
 
 
-func build() -> PoolByteArray:
+func build() -> PackedByteArray:
 	# ICO files are little-endian, PNG files are big-endian:
 	var index_block: SerialBuffer = SerialBuffer.new(false);
 	var image_block: SerialBuffer = SerialBuffer.new(true);
